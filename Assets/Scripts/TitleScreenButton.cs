@@ -15,7 +15,8 @@ public class TitleScreenButton : MonoBehaviour
     {
         PlayButton.onClick.AddListener(Play); // (Play) is the function
         
-        ExitButton.onClick.AddListener(Exit); // (Exit) is the function
+        if (ExitButton != null)
+            ExitButton.onClick.AddListener(Exit); // (Exit) is the function
     }
 
     void Play()//start functions
