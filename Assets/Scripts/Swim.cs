@@ -9,12 +9,14 @@ public class Swim : MonoBehaviour
 
     // Swim - stroke force
     [SerializeField] private float force = 300;
+
+    private Rigidbody2D _rigidbody2D;
     
     // Use this for initialization
     void Start()
     {
         // Swim towards the right
-        GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
+        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -22,6 +24,13 @@ public class Swim : MonoBehaviour
     {
         // Swim
         if (Input.GetKeyDown(KeyCode.Space))
-            GetComponent<Rigidbody2D>().AddForce(Vector2.up * force, ForceMode2D.Impulse);
+            _rigidbody2D.AddForce(Vector2.up * force, ForceMode2D.Impulse);
+
+        // Keeps seal moving across the x-axis continously
+        Vector2 v = _rigidbody2D.velocity;
+        v.x = speed;
+        _rigidbody2D.velocity = v;
+
+        _rigidbody2D.rotation = Mathf.Lerp(_rigidbody2D.rotation, _rigidbody2D.velocity.y * 5, Time.deltaTime * 10f);
     }
 }
